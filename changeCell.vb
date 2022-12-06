@@ -16,7 +16,7 @@ Sub ModifyTicket179402()
       fileName = budgetArray(i)
       ModifyProcess179402 filePath & fileName
     Next
-    MsgBox "蠑ｵ譽溷￠蟋ｰ讀�蛛溷ｑ蛛溷→荳�"
+    MsgBox "張棟偑姰椆偟傑偟偨丅"
 
 
 End Sub
@@ -43,7 +43,7 @@ Sub ModifyProcess179402(formFile As String)
         WS.Protect Password:="amadapass1", UserInterfaceOnly:=True, AllowFiltering:=True, AllowFormattingColumns:=True
         End If
    Next WS
-    Worksheets(1).Activate
+    Worksheets("Expense Plan(Total)").Activate
     Application.CutCopyMode = False
     wb.Close SaveChanges:=True
     Set WS = Nothing
@@ -53,18 +53,33 @@ End Sub
 Sub RowModify(WS As Worksheet)
   Dim rowNo As Long
   Dim dataArray As Variant
-  dataArray = Array("諱門ｯｩ譌� 蟇�", "蟆句ｪｶ螂先分譌�", "謠･蟶ｵ螟帶欄", "蜒仙�槫�ｺ蜆丈ｹ募�槫ｨｭ蟄ｸ譌捺｢｡", "蟆ｭ螢吝ｽ丞ｪ晄欄", "讀�譌灘ｲ取頃譌�", "蟲蟠俶┣謠ｱ譌�", "謐灘ｺ∵､�", "謌�謳｢蝣ｷ鞫牙ｬ･蟄樊当螯�", "謌�謳｢諛晏ｹ�", "蛛ｦ蛛ｺ諛�螳ｱ譌�")
- 
+  Dim dataArray2 As Variant
+  dataArray = Array("尋媶奐敪旓", "揥帵夛旓", "僐儞僺儏乕僞娭學旓梡", "尭壙彏媝旓", "椃旓岎捠旓", "峀崘愰揱旓", "捓庁椏", "戄搢堷摉嬥孞擖妟", "戄搢懝幐", "偦偺懠宱旓")
+  dataArray2 = Array("恖審旓 寁")
   For rowNo = 1 To 112
     If IsInArray(WS.Range("F" & rowNo).Value, dataArray) Then
       WS.Range("CF" & rowNo) = "X"
       WS.Range("CG" & rowNo) = ""
       WS.Range("CH" & rowNo) = ""
       WS.Range("CI" & rowNo) = ""
-      WS.Range("CJ" & rowNo) = "莉ｸ蜒仙ш蜆槫Λ譏∵�ｵ螢｢譬壼が諢晄歯蛛｡蛯�"
+      WS.Range("CJ" & rowNo) = "仸僐儊儞僩昁恵壢栚傪愝掕偡傞"
+      WS.Range("CG" & 59).Copy
+      WS.Range("CF" & rowNo).PasteSpecial Paste:=xlPasteFormats
+      
+    End If
+    If IsInArray(WS.Range("D" & rowNo).Value, dataArray2) Then
+      WS.Range("CF" & rowNo) = "X"
+      WS.Range("CG" & rowNo) = ""
+      WS.Range("CH" & rowNo) = ""
+      WS.Range("CI" & rowNo) = ""
+      WS.Range("CJ" & rowNo) = "仸僐儊儞僩昁恵壢栚傪愝掕偡傞"
+      WS.Range("CG" & 59).Copy
+      WS.Range("CF" & rowNo).PasteSpecial Paste:=xlPasteFormats
     End If
   Next rowNo
     WS.Range("N" & 30) = "YTD"
+    ActiveWindow.ScrollColumn = 1
+    WS.Range("C" & 32).Activate
 End Sub
 Public Function IsInArray(stringToBeFound As String, arr As Variant) As Boolean
     Dim i
