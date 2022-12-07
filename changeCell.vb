@@ -16,7 +16,7 @@ Sub ModifyTicket179402()
       fileName = budgetArray(i)
       ModifyProcess179402 filePath & fileName
     Next
-    MsgBox "張棟偑姰椆偟傑偟偨丅"
+    MsgBox "処理が完了しました。"
 
 
 End Sub
@@ -54,15 +54,15 @@ Sub RowModify(WS As Worksheet)
   Dim rowNo As Long
   Dim dataArray As Variant
   Dim dataArray2 As Variant
-  dataArray = Array("尋媶奐敪旓", "揥帵夛旓", "僐儞僺儏乕僞娭學旓梡", "尭壙彏媝旓", "椃旓岎捠旓", "峀崘愰揱旓", "捓庁椏", "戄搢堷摉嬥孞擖妟", "戄搢懝幐", "偦偺懠宱旓")
-  dataArray2 = Array("恖審旓 寁")
+  dataArray = Array("研究開発費", "展示会費", "コンピュータ関係費用", "減価償却費", "旅費交通費", "広告宣伝費", "賃借料", "貸倒引当金繰入額", "貸倒損失", "その他経費")
+  dataArray2 = Array("人件費 計")
   For rowNo = 1 To 112
     If IsInArray(WS.Range("F" & rowNo).Value, dataArray) Then
       WS.Range("CF" & rowNo) = "X"
       WS.Range("CG" & rowNo) = ""
       WS.Range("CH" & rowNo) = ""
       WS.Range("CI" & rowNo) = ""
-      WS.Range("CJ" & rowNo) = "仸僐儊儞僩昁恵壢栚傪愝掕偡傞"
+      WS.Range("CJ" & rowNo) = "※コメント必須科目を設定する"
       WS.Range("CG" & 59).Copy
       WS.Range("CF" & rowNo).PasteSpecial Paste:=xlPasteFormats
       
@@ -72,7 +72,7 @@ Sub RowModify(WS As Worksheet)
       WS.Range("CG" & rowNo) = ""
       WS.Range("CH" & rowNo) = ""
       WS.Range("CI" & rowNo) = ""
-      WS.Range("CJ" & rowNo) = "仸僐儊儞僩昁恵壢栚傪愝掕偡傞"
+      WS.Range("CJ" & rowNo) = "※コメント必須科目を設定する"
       WS.Range("CG" & 59).Copy
       WS.Range("CF" & rowNo).PasteSpecial Paste:=xlPasteFormats
     End If
