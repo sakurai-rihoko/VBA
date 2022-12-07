@@ -59,7 +59,7 @@ Sub RowModifyForecast(WS As Worksheet)
   dataArray2 = Array("人件費 計")
   For rowNo = 1 To 112
     If IsInArray(WS.Range("F" & rowNo).Value, dataArray) Then
-      WS.Range("CF" & rowNo).Formula = "=+IF(AJ" & rowNo & "=0,,X)"
+      WS.Range("CF" & rowNo).Formula = "=+IF(AJ" & rowNo & "=0,"""",""X"")"
       WS.Range("CG" & rowNo) = ""
       WS.Range("CH" & rowNo) = ""
       WS.Range("CI" & rowNo) = ""
@@ -69,7 +69,7 @@ Sub RowModifyForecast(WS As Worksheet)
       
     End If
     If IsInArray(WS.Range("D" & rowNo).Value, dataArray2) Then
-      WS.Range("CF" & rowNo).Formula = "=+IF(AJ" & rowNo & "=0,,X)"
+      WS.Range("CF" & rowNo).Formula = "=+IF(AJ" & rowNo & "=0,"""",""X"")"
       WS.Range("CG" & rowNo) = ""
       WS.Range("CH" & rowNo) = ""
       WS.Range("CI" & rowNo) = ""
