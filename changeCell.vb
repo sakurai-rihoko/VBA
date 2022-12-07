@@ -4,16 +4,14 @@ Sub ModifyTicket179402()
 
     Dim filePath As String
     Dim fileName As String
-    Dim budgetArray As Variant
+    Dim fileArray As Variant
     filePath = "C:\bpc_svn\BIN\Z7_PROFITPLAN\"
-
-    budgetArray = Array( _
+    fileArray = Array( _
     "05_Expense(Fct-PL_FY2022)_SEP.xlsm", _
     "05_Expense(Fct-PL_FY2022).xlsm")
     Dim i As Integer
-    For i = 0 To UBound(budgetArray)
-      
-      fileName = budgetArray(i)
+    For i = 0 To UBound(fileArray)
+      fileName = fileArray(i)
       ModifyProcess179402 filePath & fileName
     Next
     MsgBox "処理が完了しました。"
@@ -31,14 +29,17 @@ Sub ModifyProcess179402(formFile As String)
   Dim WS As Worksheet
   Dim sheetArray As Variant
 
-  sheetArray = Array("Expense Plan(Sheet Metal)", "Expense Plan(Micro Welding)", "Expense Plan(Cutting)", "Expense Plan(Stamping Press)", "Expense Plan(Grinding)", "Expense Plan(Other)")
+  sheetArray = Array("Expense Plan(Total)")
 
   For Each WS In wb.Worksheets
         If IsInArray(WS.Name, sheetArray) Then
         WS.Activate
         DoEvents
         WS.Unprotect Password:="amadapass1"
-        RowModify WS
+        If InStr(formFile, "Fct-PL") > 0 Then
+          RowModifyForecast WS
+        End If
+        
         WS.EnableOutlining = True
         WS.Protect Password:="amadapass1", UserInterfaceOnly:=True, AllowFiltering:=True, AllowFormattingColumns:=True
         End If
@@ -50,7 +51,7 @@ Sub ModifyProcess179402(formFile As String)
     Set wb = Nothing
     Application.Calculation = xlCalculationAutomatic
 End Sub
-Sub RowModify(WS As Worksheet)
+Sub RowModifyForecast(WS As Worksheet)
   Dim rowNo As Long
   Dim dataArray As Variant
   Dim dataArray2 As Variant
@@ -58,7 +59,7 @@ Sub RowModify(WS As Worksheet)
   dataArray2 = Array("人件費 計")
   For rowNo = 1 To 112
     If IsInArray(WS.Range("F" & rowNo).Value, dataArray) Then
-      WS.Range("CF" & rowNo) = "X"
+      WS.Range("CF" & rowNo).Formula = "=+IF(AJ" & rowNo & "=0,,X)"
       WS.Range("CG" & rowNo) = ""
       WS.Range("CH" & rowNo) = ""
       WS.Range("CI" & rowNo) = ""
@@ -68,7 +69,7 @@ Sub RowModify(WS As Worksheet)
       
     End If
     If IsInArray(WS.Range("D" & rowNo).Value, dataArray2) Then
-      WS.Range("CF" & rowNo) = "X"
+      WS.Range("CF" & rowNo).Formula = "=+IF(AJ" & rowNo & "=0,,X)"
       WS.Range("CG" & rowNo) = ""
       WS.Range("CH" & rowNo) = ""
       WS.Range("CI" & rowNo) = ""
@@ -92,6 +93,10 @@ Public Function IsInArray(stringToBeFound As String, arr As Variant) As Boolean
     IsInArray = False
 
 End Function
+
+
+
+
 
 
 
